@@ -11,7 +11,7 @@ export const THEMES: ThemePreset[] = [
   {
     id: "amoled",
     name: "Amoled",
-    swatch: ["#000000", "#1b1b1b", "#f5a councillor".replace(" councillor", "623"), "#ffffff"],
+    swatch: ["#000000", "#1b1b1b", "#f5a623", "#ffffff"],
     vars: {
       "--background": "oklch(0.06 0 0)",
       "--surface": "oklch(0.14 0.008 90)",
