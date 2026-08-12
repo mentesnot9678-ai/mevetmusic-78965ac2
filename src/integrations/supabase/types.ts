@@ -14,7 +14,113 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      playlist_tracks: {
+        Row: {
+          album: string | null
+          artist: string | null
+          created_at: string
+          duration: number | null
+          id: string
+          playlist_id: string
+          position: number
+          title: string
+          track_key: string
+          user_id: string
+        }
+        Insert: {
+          album?: string | null
+          artist?: string | null
+          created_at?: string
+          duration?: number | null
+          id?: string
+          playlist_id: string
+          position?: number
+          title: string
+          track_key: string
+          user_id: string
+        }
+        Update: {
+          album?: string | null
+          artist?: string | null
+          created_at?: string
+          duration?: number | null
+          id?: string
+          playlist_id?: string
+          position?: number
+          title?: string
+          track_key?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "playlist_tracks_playlist_id_fkey"
+            columns: ["playlist_id"]
+            isOneToOne: false
+            referencedRelation: "playlists"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      playlists: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          custom: Json
+          theme: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          custom?: Json
+          theme?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          custom?: Json
+          theme?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
