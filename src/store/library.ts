@@ -87,7 +87,7 @@ export const useLibrary = create<LibraryState>((set, get) => ({
         album,
         folder,
         duration,
-        artUrl,
+        ...(artUrl ? { artUrl } : {}),
         key,
       });
 
