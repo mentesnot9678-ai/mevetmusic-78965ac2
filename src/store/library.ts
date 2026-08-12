@@ -51,7 +51,7 @@ export const useLibrary = create<LibraryState>((set, get) => ({
       existing.add(key);
 
       const parts = rel.split("/");
-      const folder = parts.length > 1 ? parts[parts.length - 2] : "Device";
+      const folder = (parts.length > 1 ? parts[parts.length - 2] : "Device") ?? "Device";
 
       let title = baseName(file.name);
       let artist = "Unknown artist";
