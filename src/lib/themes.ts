@@ -171,6 +171,6 @@ export const THEMES: ThemePreset[] = [
   },
 ];
 
-export function getPreset(id: string) {
-  return THEMES.find((t) => t.id === id) ?? THEMES[0];
+export function getPreset(id: string): ThemePreset {
+  return (THEMES.find((t) => t.id === id) ?? THEMES[0]) as ThemePreset;
 }
