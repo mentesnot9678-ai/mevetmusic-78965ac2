@@ -12,7 +12,7 @@ export function parseLrc(raw: string): LyricLine[] {
     const stamps = [...line.matchAll(/\[(\d+):(\d+(?:[.:]\d+)?)\]/g)];
     const text = line.replace(/\[[^\]]*\]/g, "").trim();
     for (const m of stamps) {
-      const time = parseInt(m[1], 10) * 60 + parseFloat(m[2].replace(":", "."));
+      const time = parseInt(m[1] ?? "0", 10) * 60 + parseFloat((m[2] ?? "0").replace(":", "."));
       lines.push({ time, text });
     }
   }
@@ -39,8 +39,9 @@ export async function fetchLyrics(opts: {
       res = await fetch(`https://lrclib.net/api/search?${q.toString()}`);
       if (!res.ok) return null;
       const list = (await res.json()) as Array<Record<string, unknown>>;
-      if (!list.length) return null;
-      return toLyrics(list[0]);
+      const first = list[0];
+      if (!first) return null;
+      return toLyrics(first);
     }
     return toLyrics((await res.json()) as Record<string, unknown>);
   } catch {
@@ -49,8 +50,8 @@ export async function fetchLyrics(opts: {
 }
 
 function toLyrics(data: Record<string, unknown>): Lyrics | null {
-  const synced = typeof data.syncedLyrics === "string" ? data.syncedLyrics : null;
-  const plain = typeof data.plainLyrics === "string" ? data.plainLyrics : null;
+  const synced = typeof data['syncedLyrics'] === "string" ? data['syncedLyrics'] : null;
+  const plain = typeof data['plainLyrics'] === "string" ? data['plainLyrics'] : null;
   if (!synced && !plain) return null;
   return {
     synced: synced ? parseLrc(synced) : null,

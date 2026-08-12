@@ -43,6 +43,7 @@ export const useLibrary = create<LibraryState>((set, get) => ({
 
     for (let i = 0; i < audio.length; i++) {
       const file = audio[i];
+      if (!file) continue;
       const rel = (file as File & { webkitRelativePath?: string }).webkitRelativePath || file.name;
       const key = `${rel}::${file.size}`;
       set({ progress: { done: i + 1, total: audio.length } });

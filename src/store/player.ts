@@ -51,14 +51,15 @@ export const usePlayer = create<PlayerState>((set, get) => ({
 
   current: () => {
     const { queue, index } = get();
-    return index >= 0 && index < queue.length ? queue[index] : null;
+    return (index >= 0 ? (queue[index] ?? null) : null);
   },
 
   playQueue: (tracks, startIndex = 0) => {
     const el = getAudio();
     if (!el || !tracks.length) return;
-    set({ queue: tracks, index: startIndex });
     const track = tracks[startIndex];
+    if (!track) return;
+    set({ queue: tracks, index: startIndex });
     el.src = track.url;
     el.volume = get().volume;
     void el.play().then(
