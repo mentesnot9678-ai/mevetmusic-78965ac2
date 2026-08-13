@@ -14,8 +14,11 @@ import { Route as AlbumsRouteImport } from './routes/albums'
 import { Route as ArtistsRouteImport } from './routes/artists'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as FoldersRouteImport } from './routes/folders'
+import { Route as LyricsRouteImport } from './routes/lyrics'
+import { Route as NowPlayingRouteImport } from './routes/now-playing'
 import { Route as PlaylistsRouteImport } from './routes/playlists'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SongsRouteImport } from './routes/songs'
 
 const IndexRoute = IndexRouteImport.update({
@@ -43,6 +46,16 @@ const FoldersRoute = FoldersRouteImport.update({
   path: '/folders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LyricsRoute = LyricsRouteImport.update({
+  id: '/lyrics',
+  path: '/lyrics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NowPlayingRoute = NowPlayingRouteImport.update({
+  id: '/now-playing',
+  path: '/now-playing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlaylistsRoute = PlaylistsRouteImport.update({
   id: '/playlists',
   path: '/playlists',
@@ -51,6 +64,11 @@ const PlaylistsRoute = PlaylistsRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SongsRoute = SongsRouteImport.update({
@@ -65,8 +83,11 @@ export interface FileRoutesByFullPath {
   '/artists': typeof ArtistsRoute
   '/auth': typeof AuthRoute
   '/folders': typeof FoldersRoute
+  '/lyrics': typeof LyricsRoute
+  '/now-playing': typeof NowPlayingRoute
   '/playlists': typeof PlaylistsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/settings': typeof SettingsRoute
   '/songs': typeof SongsRoute
 }
 export interface FileRoutesByTo {
@@ -75,8 +96,11 @@ export interface FileRoutesByTo {
   '/artists': typeof ArtistsRoute
   '/auth': typeof AuthRoute
   '/folders': typeof FoldersRoute
+  '/lyrics': typeof LyricsRoute
+  '/now-playing': typeof NowPlayingRoute
   '/playlists': typeof PlaylistsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/settings': typeof SettingsRoute
   '/songs': typeof SongsRoute
 }
 export interface FileRoutesById {
@@ -86,8 +110,11 @@ export interface FileRoutesById {
   '/artists': typeof ArtistsRoute
   '/auth': typeof AuthRoute
   '/folders': typeof FoldersRoute
+  '/lyrics': typeof LyricsRoute
+  '/now-playing': typeof NowPlayingRoute
   '/playlists': typeof PlaylistsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/settings': typeof SettingsRoute
   '/songs': typeof SongsRoute
 }
 export interface FileRouteTypes {
@@ -98,8 +125,11 @@ export interface FileRouteTypes {
     | '/artists'
     | '/auth'
     | '/folders'
+    | '/lyrics'
+    | '/now-playing'
     | '/playlists'
     | '/reset-password'
+    | '/settings'
     | '/songs'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -108,8 +138,11 @@ export interface FileRouteTypes {
     | '/artists'
     | '/auth'
     | '/folders'
+    | '/lyrics'
+    | '/now-playing'
     | '/playlists'
     | '/reset-password'
+    | '/settings'
     | '/songs'
   id:
     | '__root__'
@@ -118,8 +151,11 @@ export interface FileRouteTypes {
     | '/artists'
     | '/auth'
     | '/folders'
+    | '/lyrics'
+    | '/now-playing'
     | '/playlists'
     | '/reset-password'
+    | '/settings'
     | '/songs'
   fileRoutesById: FileRoutesById
 }
@@ -129,8 +165,11 @@ export interface RootRouteChildren {
   ArtistsRoute: typeof ArtistsRoute
   AuthRoute: typeof AuthRoute
   FoldersRoute: typeof FoldersRoute
+  LyricsRoute: typeof LyricsRoute
+  NowPlayingRoute: typeof NowPlayingRoute
   PlaylistsRoute: typeof PlaylistsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  SettingsRoute: typeof SettingsRoute
   SongsRoute: typeof SongsRoute
 }
 
@@ -171,6 +210,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FoldersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lyrics': {
+      id: '/lyrics'
+      path: '/lyrics'
+      fullPath: '/lyrics'
+      preLoaderRoute: typeof LyricsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/now-playing': {
+      id: '/now-playing'
+      path: '/now-playing'
+      fullPath: '/now-playing'
+      preLoaderRoute: typeof NowPlayingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/playlists': {
       id: '/playlists'
       path: '/playlists'
@@ -183,6 +236,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/songs': {
@@ -201,8 +261,11 @@ const rootRouteChildren: RootRouteChildren = {
   ArtistsRoute: ArtistsRoute,
   AuthRoute: AuthRoute,
   FoldersRoute: FoldersRoute,
+  LyricsRoute: LyricsRoute,
+  NowPlayingRoute: NowPlayingRoute,
   PlaylistsRoute: PlaylistsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  SettingsRoute: SettingsRoute,
   SongsRoute: SongsRoute,
 }
 export const routeTree = rootRouteImport
