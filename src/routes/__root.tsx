@@ -12,9 +12,13 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
+import { useOnline } from "@/hooks/useOnline";
 import { Toaster } from "@/components/ui/sonner";
 import { bindAudioEvents } from "@/store/player";
+import { useLibrary } from "@/store/library";
+import { useLyrics } from "@/store/lyrics";
 import { useTheme } from "@/store/theme";
+
 
 function NotFoundComponent() {
   return (
@@ -124,17 +128,28 @@ function RootShell({ children }: { children: ReactNode }) {
 function AppRuntime({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   const hydrate = useTheme((s) => s.hydrate);
+  const tracks = useLibrary((s) => s.tracks);
+  const online = useOnline();
 
   useEffect(() => {
     bindAudioEvents();
+    useLyrics.getState().hydrate();
   }, []);
 
   useEffect(() => {
     void hydrate(user?.id ?? null);
   }, [user, hydrate]);
 
+  // Automatically fetch + cache lyrics for the whole library whenever we're online.
+  useEffect(() => {
+    if (!online || !tracks.length) return;
+    const t = setTimeout(() => void useLyrics.getState().prefetchAll(tracks), 1200);
+    return () => clearTimeout(t);
+  }, [online, tracks]);
+
   return <>{children}</>;
 }
+
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
