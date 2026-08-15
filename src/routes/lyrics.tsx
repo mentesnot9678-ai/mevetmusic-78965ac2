@@ -70,10 +70,10 @@ function LyricsScreen() {
           loop
           muted
           playsInline
-          className="absolute inset-0 size-full object-cover"
+          className="absolute inset-0 size-full object-contain"
         />
       ) : bgMedia?.type === "image" ? (
-        <img src={bgMedia.url} alt="" className="absolute inset-0 size-full object-cover" />
+        <img src={bgMedia.url} alt="" className="absolute inset-0 size-full object-contain" />
       ) : track?.artUrl ? (
         <img src={track.artUrl} alt="" className="absolute inset-0 size-full scale-110 object-cover blur-2xl" />
       ) : null}
