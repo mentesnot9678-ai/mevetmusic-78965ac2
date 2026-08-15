@@ -67,19 +67,24 @@ export const useTheme = create<ThemeState>((set, get) => ({
         }
       }
     }
-    if (userId) {
-      const { data } = await supabase
-        .from("user_settings")
-        .select("theme, custom")
-        .eq("user_id", userId)
-        .maybeSingle();
-      if (data) {
-        set({
-          preset: data.theme || "amoled",
-          custom: (data.custom as ThemeCustom) || {},
-        });
+    if (userId && (typeof navigator === "undefined" || navigator.onLine)) {
+      try {
+        const { data } = await supabase
+          .from("user_settings")
+          .select("theme, custom")
+          .eq("user_id", userId)
+          .maybeSingle();
+        if (data) {
+          set({
+            preset: data.theme || "amoled",
+            custom: (data.custom as ThemeCustom) || {},
+          });
+        }
+      } catch {
+        /* offline — keep the locally stored theme */
       }
     }
+
     get().apply();
   },
   persist: async (userId) => {
