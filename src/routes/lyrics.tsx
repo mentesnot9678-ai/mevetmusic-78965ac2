@@ -127,7 +127,12 @@ function LyricsScreen() {
             </p>
           ) : (
             <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">No lyrics found for this track.</p>
+              <p className="text-sm text-muted-foreground">
+                {online
+                  ? "No lyrics found for this track."
+                  : "You're offline — no saved lyrics for this track yet."}
+              </p>
+
               <button
                 onClick={(e) => {
                   e.stopPropagation();
