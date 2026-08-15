@@ -4,6 +4,8 @@ import { Image as ImageIcon, Pause, Play, Upload, X } from "lucide-react";
 import { toast } from "sonner";
 import { usePlayer } from "@/store/player";
 import { useLyrics } from "@/store/lyrics";
+import { useOnline } from "@/hooks/useOnline";
+
 
 export const Route = createFileRoute("/lyrics")({
   head: () => ({
@@ -29,6 +31,8 @@ function LyricsScreen() {
   const isPlaying = usePlayer((s) => s.isPlaying);
   const toggle = usePlayer((s) => s.toggle);
   const { byTrack, loading, load, importFile, bgMedia, setBgMedia } = useLyrics();
+  const online = useOnline();
+
   const [chrome, setChrome] = useState(true);
   const lrcRef = useRef<HTMLInputElement>(null);
   const bgRef = useRef<HTMLInputElement>(null);
@@ -36,9 +40,10 @@ function LyricsScreen() {
 
   useEffect(() => {
     if (track) void load(track);
-  }, [track, load]);
+  }, [track, load, online]);
 
   const lyrics = track ? byTrack[track.key] : null;
+
 
   const activeIndex = useMemo(() => {
     if (!lyrics?.synced) return -1;
