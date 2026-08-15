@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import { MiniPlayer } from "./MiniPlayer";
 import { TabBar } from "./TabBar";
 import { SleepBadge } from "./SleepBadge";
+import { OfflineBanner } from "./OfflineBanner";
+
 
 export function AppShell({
   title,
@@ -40,7 +42,13 @@ export function AppShell({
           </div>
         </div>
       </header>
-      <main className="px-4 pb-40 pt-3">{children}</main>
+      <main className="px-4 pb-40 pt-3">
+        <div className="mb-3 empty:mb-0">
+          <OfflineBanner />
+        </div>
+        {children}
+      </main>
+
       <MiniPlayer />
       <TabBar />
     </div>
