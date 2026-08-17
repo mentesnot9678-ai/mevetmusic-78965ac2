@@ -68,7 +68,7 @@ function LyricsScreen() {
 
   return (
     <div
-      className="relative min-h-screen overflow-hidden bg-background"
+      className="relative h-[100dvh] overflow-hidden bg-background"
       onClick={() => setChrome((c) => !c)}
     >
       {bgMedia?.type === "video" ? (
@@ -78,16 +78,16 @@ function LyricsScreen() {
           loop
           muted
           playsInline
-          className="absolute inset-0 size-full object-contain"
+          className="absolute inset-0 size-full object-cover"
         />
       ) : bgMedia?.type === "image" ? (
-        <img src={bgMedia.url} alt="" className="absolute inset-0 size-full object-contain" />
+        <img src={bgMedia.url} alt="" className="absolute inset-0 size-full object-cover" />
       ) : track?.artUrl ? (
         <img src={track.artUrl} alt="" className="absolute inset-0 size-full scale-110 object-cover blur-2xl" />
       ) : null}
       <div className="absolute inset-0 bg-background/70" />
 
-      <div className="relative mx-auto flex min-h-screen max-w-md flex-col">
+      <div className="relative mx-auto flex h-full max-w-md flex-col">
         <div
           className={`flex items-center justify-between px-4 pt-[calc(env(safe-area-inset-top)+12px)] transition-opacity duration-300 ${chrome ? "opacity-100" : "pointer-events-none opacity-0"}`}
           onClick={(e) => e.stopPropagation()}
@@ -108,7 +108,11 @@ function LyricsScreen() {
           </div>
         </div>
 
-        <div className="no-scrollbar flex-1 overflow-y-auto px-7 py-16 text-center">
+        <div
+          ref={scrollRef}
+          className="no-scrollbar relative min-h-0 flex-1 overflow-y-auto px-7 py-[40vh] text-center"
+        >
+
           {!track ? (
             <p className="text-sm text-muted-foreground">Play a song to see its lyrics.</p>
           ) : loading && !lyrics ? (
