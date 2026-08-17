@@ -37,6 +37,7 @@ function LyricsScreen() {
   const lrcRef = useRef<HTMLInputElement>(null);
   const bgRef = useRef<HTMLInputElement>(null);
   const activeRef = useRef<HTMLParagraphElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (track) void load(track);
@@ -54,9 +55,16 @@ function LyricsScreen() {
     return idx;
   }, [lyrics, position]);
 
+  // Keep the active line centred by scrolling the lyrics container itself
+  // (scrollIntoView would scroll the page instead on mobile).
   useEffect(() => {
-    activeRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    const box = scrollRef.current;
+    const line = activeRef.current;
+    if (!box || !line) return;
+    const target = line.offsetTop - box.clientHeight / 2 + line.clientHeight / 2;
+    box.scrollTo({ top: Math.max(0, target), behavior: "smooth" });
   }, [activeIndex]);
+
 
   return (
     <div
